@@ -9,14 +9,15 @@ namespace GTAV_Mod_Menu
 {
     public class Main : Script
     {
-        Vehicle car;
         private bool menuOpen = false;
         private int selectedIndex = 0;
-        private readonly string[] menuOptions = { "Spawn adder", "God Mode", "Give Weapons" };
+        private readonly string[] menuOptions = { "Spawn adder", "God Mode", "Give Weapons", "Wanted level off", "Super Speed", "Infinite Ammo"};
+        private bool superSpeed = false;
         public Main()
         {
             Tick += onTick;
             KeyDown += onKeyDown;
+            Interval = 0;
         }
 
         private void onTick(object sender, EventArgs e)
@@ -36,6 +37,15 @@ namespace GTAV_Mod_Menu
                     }
                 }
                 GTA.UI.Screen.ShowSubtitle(displayText, 1);
+            }
+            if (superSpeed)
+            {
+                if (Game.Player.Character.IsRunning || Game.Player.Character.IsSprinting)
+                {
+                    Vector3 forward = Game.Player.Character.ForwardVector;
+                    Game.Player.Character.Velocity += forward * 10.5f;
+                }
+
             }
         }
 
@@ -109,8 +119,33 @@ namespace GTAV_Mod_Menu
                     Notification.Show("God Mode Activated!");
                     break;
                 case 2:
-                    Weapon weapon = Game.Player.Character.Weapons.Give(WeaponHash.GolfClub, 0, true, true);
+                    Weapon weapon1 = Game.Player.Character.Weapons.Give(WeaponHash.AssaultRifle, 200, true, true);
+                    Weapon weapon2 = Game.Player.Character.Weapons.Give(WeaponHash.AcidPackage, 200, false, true);
+                    Weapon weapon3 = Game.Player.Character.Weapons.Give(WeaponHash.Firework, 10, false, true);
+                    Weapon weapon4 = Game.Player.Character.Weapons.Give(WeaponHash.VintagePistol, 200, false, true);
+                    Weapon weapon5 = Game.Player.Character.Weapons.Give(WeaponHash.Minigun, 200, false, true);
+                    Weapon weapon6 = Game.Player.Character.Weapons.Give(WeaponHash.APPistol, 200, false, true);
                     Notification.Show("Weapons Given!");
+                    break;
+                case 3:
+                    Game.Player.WantedLevel = 0;
+                    Notification.Show("Wanted Level Off!");
+                    break;
+                case 4:
+                    if(!superSpeed)
+                    {
+                        superSpeed = true;
+                        Notification.Show("Super Speed On!");
+                    }
+                    else
+                    {
+                        superSpeed = false;
+                        Notification.Show("Super Speed off!");
+                    }
+                    break;
+                case 5:
+                    Game.Player.Character.Weapons.Current.InfiniteAmmo = true;
+                    Notification.Show("Ammo set to infinite!");
                     break;
             }
         }
