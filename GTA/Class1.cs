@@ -9,9 +9,57 @@ namespace GTAV_Mod_Menu
 {
     public class Main : Script
     {
+        // Define the sub-menu states
+        private enum SubMenu
+        {
+            None,
+            Weather,
+            Vehicle
+        }
+        private SubMenu currentSubMenu = SubMenu.None;
         private bool menuOpen = false;
-        private int selectedIndex = 0;
-        private readonly string[] menuOptions = { "Spawn adder", "God Mode", "Give Weapons", "Wanted level off", "Super Speed", "Infinite Ammo"};
+
+        // Define the selected index for the main menu and sub-menus
+        private int selectedMenuIndex = 0;
+        private int selectedSubMenuIndex = 0;
+
+        // Define the menu options and sub-menu options
+        private readonly string[] menuOptions = { 
+            "Weather Menu", 
+            "Vehicle Menu", 
+            "Player Menu", 
+            "World Menu"
+        };
+        private readonly string[] weatherOptions = { 
+            "Cloudy", 
+            "Sunny", 
+            "Rainy", 
+            "Snowy" 
+        };
+        private readonly string[] vehicleOptions = { 
+            "Adder", 
+            "Zentorno", 
+            "Bullet", 
+            "Cheetah", 
+            "Infernus", 
+            "T20" 
+        };
+        private readonly string[] playerOptions = { 
+            "God Mode", 
+            "Give Weapons", 
+            "Wanted Level Off", 
+            "Super Speed", 
+            "Infinite Ammo" 
+        };
+        private readonly string[] worldOptions = { 
+            "Set time of day: Morning", 
+            "Set time of day: Noon", 
+            "Set time of day: night", 
+            "Remove vehicles", 
+            "Low gravity mode", 
+            "Remove pedestrians" 
+        };
+
         private bool superSpeed = false;
         public Main()
         {
@@ -22,12 +70,12 @@ namespace GTAV_Mod_Menu
 
         private void onTick(object sender, EventArgs e)
         {
-            if (menuOpen)
+            if (menuOpen && currentSubMenu == SubMenu.None)
             {
                 string displayText = "";
-                for(int i = 0; i < menuOptions.Length; i++)
+                for (int i = 0; i < menuOptions.Length; i++)
                 {
-                    if (i == selectedIndex)
+                    if (i == selectedMenuIndex)
                     {
                         displayText += $"→ {menuOptions[i]}\n";
                     }
@@ -38,14 +86,37 @@ namespace GTAV_Mod_Menu
                 }
                 GTA.UI.Screen.ShowSubtitle(displayText, 1);
             }
-            if (superSpeed)
+            else if (currentSubMenu == SubMenu.Weather)
             {
-                if (Game.Player.Character.IsRunning || Game.Player.Character.IsSprinting)
+                string displayText = "Weather Menu:\n";
+                for (int i = 0; i < weatherOptions.Length; i++)
                 {
-                    Vector3 forward = Game.Player.Character.ForwardVector;
-                    Game.Player.Character.Velocity += forward * 10.5f;
+                    if (i == selectedSubMenuIndex)
+                    {
+                        displayText += $"→ {weatherOptions[i]}\n";
+                    }
+                    else
+                    {
+                        displayText += $"   {weatherOptions[i]}\n";
+                    }
                 }
-
+                GTA.UI.Screen.ShowSubtitle(displayText, 1);
+            }
+            else if (currentSubMenu == SubMenu.Vehicle)
+            {
+                string displayText = "Vehicle Menu:\n";
+                for (int i = 0; i < vehicleOptions.Length; i++)
+                {
+                    if (i == selectedSubMenuIndex)
+                    {
+                        displayText += $"→ {vehicleOptions[i]}\n";
+                    }
+                    else
+                    {
+                        displayText += $"   {vehicleOptions[i]}\n";
+                    }
+                }
+                GTA.UI.Screen.ShowSubtitle(displayText, 1);
             }
         }
 
@@ -68,31 +139,80 @@ namespace GTAV_Mod_Menu
                 return;
             }
 
-            if(e.KeyCode == Keys.NumPad8)
+            if(menuOpen && currentSubMenu == SubMenu.None)
             {
-                if(selectedIndex == 0)
+                switch(e.KeyCode)
                 {
-                    selectedIndex = menuOptions.Length - 1;
-                }
-                else
-                {
-                    selectedIndex--;
+                    case Keys.NumPad8: // Up
+                        if (selectedMenuIndex == 0)
+                        {
+                            selectedMenuIndex = menuOptions.Length - 1;
+                        }
+                        else
+                        {
+                            selectedMenuIndex--;
+                        }
+                        break;
+                    case Keys.NumPad2: // Down
+                        if (selectedMenuIndex == menuOptions.Length - 1)
+                        {
+                            selectedMenuIndex = 0;
+                        }
+                        else
+                        {
+                            selectedMenuIndex++;
+                        }
+                        break;
+                    case Keys.NumPad5: // Select
+                        ExecuteSubMenuOption(selectedMenuIndex);
+                        break;
                 }
             }
-            if (e.KeyCode == Keys.NumPad2)
+            else if(menuOpen)
             {
-                if(selectedIndex == menuOptions.Length)
+                switch (e.KeyCode)
                 {
-                    selectedIndex = 0;
-                }
-                else
-                {
-                    selectedIndex++;
+                    case Keys.NumPad8: // Up
+                        if (selectedSubMenuIndex == 0)
+                        {
+                            selectedSubMenuIndex = menuOptions.Length - 1;
+                        }
+                        else
+                        {
+                            selectedSubMenuIndex--;
+                        }
+                        break;
+                    case Keys.NumPad2: // Down
+                        if (selectedSubMenuIndex == menuOptions.Length - 1)
+                        {
+                            selectedSubMenuIndex = 0;
+                        }
+                        else
+                        {
+                            selectedSubMenuIndex++;
+                        }
+                        break;
+                    case Keys.NumPad5: // Select
+                        ExecuteOption(selectedSubMenuIndex);
+                        break;
+                    case Keys.NumPad0: // Back to main menu
+                        currentSubMenu = SubMenu.None;
+                        selectedSubMenuIndex = 0;
+                        break;
                 }
             }
-            if (e.KeyCode == Keys.NumPad5)
+        }
+
+        private void ExecuteSubMenuOption(int index)
+        {
+            switch(index)
             {
-                ExecuteOption(selectedIndex);
+                case 0: // Weather menu
+                    currentSubMenu = SubMenu.Weather;
+                    break;
+                case 1: // Vehicle menu
+                    currentSubMenu = SubMenu.Vehicle;
+                    break;
             }
         }
 
@@ -132,18 +252,6 @@ namespace GTAV_Mod_Menu
                     Notification.Show("Wanted Level Off!");
                     break;
                 case 4:
-                    if(!superSpeed)
-                    {
-                        superSpeed = true;
-                        Notification.Show("Super Speed On!");
-                    }
-                    else
-                    {
-                        superSpeed = false;
-                        Notification.Show("Super Speed off!");
-                    }
-                    break;
-                case 5:
                     Game.Player.Character.Weapons.Current.InfiniteAmmo = true;
                     Notification.Show("Ammo set to infinite!");
                     break;
