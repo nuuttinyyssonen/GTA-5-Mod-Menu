@@ -4,6 +4,7 @@ using GTA.Native;
 using GTA.Math;
 using System.Windows.Forms;
 using GTA.UI;
+using teleport;
 
 namespace MenuActions
 {
@@ -148,5 +149,28 @@ namespace MenuActions
 					break;
 			}
 		}
+
+		public static void ExecuteTeleportOption(int index)
+		{
+			switch (index)
+			{
+				case 0:
+					Vector3 mountChilliadCoords = new Vector3(450.718f, 5566.614f, 806.183f);
+					TeleportToCoords.teleportTo(mountChilliadCoords[0], mountChilliadCoords[1], mountChilliadCoords[2]);
+					break;
+				case 1:
+					Vector3 lsAirportCoords = new Vector3(-1034.0f, -2730.0f, 20.0f);
+					TeleportToCoords.teleportTo(lsAirportCoords[0], lsAirportCoords[1], lsAirportCoords[2]);
+					break;
+				case 2:
+					Vector3 mazeBankRoofCoords = new Vector3(-75.0f, -819.0f, 326.0f);
+					TeleportToCoords.teleportTo(mazeBankRoofCoords[0], mazeBankRoofCoords[1], mazeBankRoofCoords[2]);
+					break;
+				case 3:
+					Vector3 fortZancudoCoords = new Vector3(-2072.8f, 3081.5f, 32.8f);
+					TeleportToCoords.teleportTo(fortZancudoCoords[0], fortZancudoCoords[1], fortZancudoCoords[2]);
+                    break;
+            }
+        }
 	}
 }

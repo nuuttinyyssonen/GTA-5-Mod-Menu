@@ -92,6 +92,22 @@ namespace ticks
                 }
                 GTA.UI.Screen.ShowSubtitle(displayText, 1);
             }
+            else if(Main.currentSubMenu == Main.SubMenu.Teleport)
+            {
+                string displayText = "Teleport Menu:\n";
+                for (int i = 0; i < Main.teleportOptions.Length; i++)
+                {
+                    if (i == Main.selectedSubMenuIndex)
+                    {
+                        displayText += $"→ {Main.teleportOptions[i]}\n";
+                    }
+                    else
+                    {
+                        displayText += $"   {Main.teleportOptions[i]}\n";
+                    }
+                }
+                GTA.UI.Screen.ShowSubtitle(displayText, 1);
+            }
         }
     }
 }

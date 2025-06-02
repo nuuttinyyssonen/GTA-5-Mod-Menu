@@ -32,6 +32,10 @@ namespace ExecuteAllMods
                     Main.currentSubMenu = Main.SubMenu.World;
                     Main.selectedSubMenuOption = Main.worldOptions;
                     break;
+                case 4: // Teleport menu
+                    Main.currentSubMenu = Main.SubMenu.Teleport;
+                    Main.selectedSubMenuOption = Main.teleportOptions;
+                    break;
             }
             Main.selectedSubMenuIndex = 0; // Reset sub-menu index when entering a new sub-menu
         }
@@ -51,6 +55,9 @@ namespace ExecuteAllMods
                     break;
                 case Main.SubMenu.World:
                     SubMenuActions.ExecuteWorldOption(index);
+                    break;
+                case Main.SubMenu.Teleport:
+                    SubMenuActions.ExecuteTeleportOption(index);
                     break;
             }
         }

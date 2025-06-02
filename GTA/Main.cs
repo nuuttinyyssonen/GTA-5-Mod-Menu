@@ -20,7 +20,8 @@ namespace GTAV_Mod_Menu
             Weather,
             Vehicle,
             Player,
-            World
+            World,
+            Teleport
         }
         public static SubMenu currentSubMenu = SubMenu.None;
         public static bool menuOpen = false;
@@ -35,7 +36,8 @@ namespace GTAV_Mod_Menu
             "Weather Menu", 
             "Vehicle Menu", 
             "Player Menu", 
-            "World Menu"
+            "World Menu",
+            "Teleport Menu"
         };
         public static readonly string[] weatherOptions = { 
             "Cloudy", 
@@ -65,6 +67,12 @@ namespace GTAV_Mod_Menu
             "Remove vehicles", 
             "Low gravity mode", 
             "Remove pedestrians" 
+        };
+        public static readonly string[] teleportOptions = {
+            "Mount Chiliad",
+            "Los Santos International Airport",
+            "Maze Bank Roof",
+            "Fort Zancudo"
         };
 
         public Main()
