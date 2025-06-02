@@ -5,6 +5,7 @@ using GTA.Math;
 using System.Windows.Forms;
 using GTA.UI;
 using GTAV_Mod_Menu;
+using FireVehicles;
 
 namespace ticks
 {
@@ -115,6 +116,14 @@ namespace ticks
             if (Main.superJump)
             {
                 Function.Call(Hash.SET_SUPER_JUMP_THIS_FRAME, Game.Player.Handle);
+            }
+            if (Main.vehicleFire)
+            {
+                Ped player = Game.Player.Character;
+                if(Game.IsControlPressed(GTA.Control.Attack) && !player.IsInVehicle())
+                {
+                    FireVehiclesFromGun.handleFireVehicles(player);
+                }
             }
         }
     }

@@ -31,9 +31,10 @@ namespace GTAV_Mod_Menu
         public static int selectedSubMenuIndex = 0;
         public static string[] selectedSubMenuOption;
 
-        // Define the super speed and super jump states
+        // Define mod states
         public static bool superSpeed = false;
         public static bool superJump = false;
+        public static bool vehicleFire = false;
 
         // Define the menu options and sub-menu options
         public static readonly string[] menuOptions = { 
@@ -63,7 +64,8 @@ namespace GTAV_Mod_Menu
             "Wanted Level Off", 
             "Super Speed", 
             "Infinite Ammo",
-            "Super Jump"
+            "Super Jump",
+            "Fire Vehicles From Gun"
         };
         public static readonly string[] worldOptions = { 
             "Set time of day: Morning", 

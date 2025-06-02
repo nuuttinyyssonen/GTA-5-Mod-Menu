@@ -119,6 +119,17 @@ namespace MenuActions
                     Main.superJump = !Main.superJump;
                     Notification.PostTicker("Super Jump!", false);
                     break;
+				case 6: // Vehicle Fire
+                    Main.vehicleFire = !Main.vehicleFire;
+                    if (Main.vehicleFire)
+                    {
+                        Notification.PostTicker("Vehicle Fire Enabled!", false);
+                    }
+                    else
+                    {
+                        Notification.PostTicker("Vehicle Fire Disabled!", false);
+                    }
+					break;
             }
 		}
 

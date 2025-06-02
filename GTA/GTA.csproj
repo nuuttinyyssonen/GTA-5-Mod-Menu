@@ -52,6 +52,7 @@
 	<Compile Include="HandleKey.cs" />
 	<Compile Include="HandleTicks.cs" />
 	<Compile Include="TeleportToCoords.cs" />
+	<Compile Include="FireVehiclesFromGun.cs"/>
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
