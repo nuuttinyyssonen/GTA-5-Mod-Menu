@@ -5,13 +5,13 @@ using GTA.Math;
 using System.Windows.Forms;
 using GTA.UI;
 using teleport;
+using GTAV_Mod_Menu;
 
 namespace MenuActions
 {
 	public static class SubMenuActions
 	{
-		public static bool superSpeed = false;
-		public static void ExecuteWorldOption(int index)
+        public static void ExecuteWorldOption(int index)
 		{
 			switch (index)
 			{
@@ -108,23 +108,18 @@ namespace MenuActions
                     Notification.PostTicker("Wanted Level Off!", false);
 					break;
 				case 3: // Super Speed
-					superSpeed = !superSpeed;
-					if (superSpeed)
-					{
-						Game.Player.Character.Speed = 10f; // Set speed to a high value
-						Notification.PostTicker("Super Speed Activated!", false);
-					}
-					else
-					{
-						Game.Player.Character.Speed = 1f; // Reset speed to normal
-						Notification.PostTicker("Super Speed Deactivated!", false);
-					}
-					break;
+                    Main.superSpeed = !Main.superSpeed;
+                    Notification.PostTicker("Super Speed!", false);
+                    break;
 				case 4: // Infinite Ammo
 					Game.Player.Character.Weapons.Current.InfiniteAmmo = true;
 					Notification.PostTicker("Ammo set to infinite!", false);
 					break;
-			}
+				case 5: // Super Jump
+                    Main.superJump = !Main.superJump;
+                    Notification.PostTicker("Super Jump!", false);
+                    break;
+            }
 		}
 
 		public static void ExecuteWeatherOption(int index)

@@ -108,6 +108,14 @@ namespace ticks
                 }
                 GTA.UI.Screen.ShowSubtitle(displayText, 1);
             }
+            if (Main.superSpeed)
+            {
+                Function.Call(Hash.SET_RUN_SPRINT_MULTIPLIER_FOR_PLAYER, Game.Player.Handle, 1.49f);
+            }
+            if (Main.superJump)
+            {
+                Function.Call(Hash.SET_SUPER_JUMP_THIS_FRAME, Game.Player.Handle);
+            }
         }
     }
 }
