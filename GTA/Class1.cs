@@ -6,6 +6,7 @@ using System.Windows.Forms;
 using GTA.UI;
 using MenuActions;
 using ExecuteAllMods;
+using Key;
 
 namespace GTAV_Mod_Menu
 {
@@ -21,15 +22,15 @@ namespace GTAV_Mod_Menu
             World
         }
         public static SubMenu currentSubMenu = SubMenu.None;
-        private bool menuOpen = false;
+        public static bool menuOpen = false;
 
         // Define the selected index for the main menu and sub-menus
-        private int selectedMenuIndex = 0;
+        public static int selectedMenuIndex = 0;
         public static int selectedSubMenuIndex = 0;
         public static string[] selectedSubMenuOption;
 
         // Define the menu options and sub-menu options
-        private readonly string[] menuOptions = { 
+        public static readonly string[] menuOptions = { 
             "Weather Menu", 
             "Vehicle Menu", 
             "Player Menu", 
@@ -68,7 +69,7 @@ namespace GTAV_Mod_Menu
         public Main()
         {
             Tick += onTick;
-            KeyDown += onKeyDown;
+            KeyDown += HandleKey.handleKeyDown;
             Interval = 0;
         }
 
@@ -153,89 +154,6 @@ namespace GTAV_Mod_Menu
                     }
                 }
                 GTA.UI.Screen.ShowSubtitle(displayText, 1);
-            }
-        }
-        private void onKeyDown(object semder, KeyEventArgs e)
-        {
-            if (e.KeyCode == Keys.F5)
-            {
-                menuOpen = !menuOpen;
-                if(menuOpen)
-                {
-                    Notification.Show("Mod menu opened!");
-                } else
-                {
-                    currentSubMenu = SubMenu.None; // Reset sub-menu when closing the menu
-                    Notification.Show("Mod Menu Closed!");
-                }
-            }
-
-            if(!menuOpen)
-            {
-                return;
-            }
-
-            if(menuOpen && currentSubMenu == SubMenu.None)
-            {
-                switch(e.KeyCode)
-                {
-                    case Keys.NumPad8: // Up
-                        if (selectedMenuIndex == 0)
-                        {
-                            selectedMenuIndex = menuOptions.Length - 1;
-                        }
-                        else
-                        {
-                            selectedMenuIndex--;
-                        }
-                        break;
-                    case Keys.NumPad2: // Down
-                        if (selectedMenuIndex == menuOptions.Length - 1)
-                        {
-                            selectedMenuIndex = 0;
-                        }
-                        else
-                        {
-                            selectedMenuIndex++;
-                        }
-                        break;
-                    case Keys.NumPad5: // Select
-                        ExecuteMods.ExecuteSubMenuOption(selectedMenuIndex);
-                        break;
-                }
-            }
-            else if(menuOpen)
-            {
-                switch (e.KeyCode)
-                {
-                    case Keys.NumPad8: // Up
-                        if (selectedSubMenuIndex == 0)
-                        {
-                            selectedSubMenuIndex = selectedSubMenuOption.Length - 1;
-                        }
-                        else
-                        {
-                            selectedSubMenuIndex--;
-                        }
-                        break;
-                    case Keys.NumPad2: // Down
-                        if (selectedSubMenuIndex == selectedSubMenuOption.Length - 1)
-                        {
-                            selectedSubMenuIndex = 0;
-                        }
-                        else
-                        {
-                            selectedSubMenuIndex++;
-                        }
-                        break;
-                    case Keys.NumPad5: // Select
-                        ExecuteMods.ExecuteOptions(selectedSubMenuIndex);
-                        break;
-                    case Keys.NumPad0: // Back to main menu
-                        currentSubMenu = SubMenu.None;
-                        selectedSubMenuIndex = 0;
-                        break;
-                }
             }
         }
     }

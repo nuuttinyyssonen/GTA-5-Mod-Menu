@@ -49,6 +49,8 @@
     <Compile Include="Class1.cs" />
 	<Compile Include="SubMenuActions.cs" />
 	<Compile Include="ExecuteMods.cs" />
+	<Compile Include="HandleKey.cs" />
+	<Compile Include="HandleTick.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
