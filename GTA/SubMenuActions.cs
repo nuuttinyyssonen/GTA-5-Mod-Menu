@@ -15,34 +15,34 @@ namespace MenuActions
 			switch (index)
 			{
 				case 0: // Set time of day: Morning
-					World.CurrentTimeOfDay = new TimeSpan(6, 0, 0); // 6 AM
-					Notification.Show("Time set to Morning!");
+                    World.CurrentTimeOfDay = new TimeSpan(6, 0, 0); // 6 AM
+                    Notification.PostTicker("Time set to Morning!", false);
 					break;
 				case 1: // Set time of day: Noon
 					World.CurrentTimeOfDay = new TimeSpan(12, 0, 0); // 12 PM
-					Notification.Show("Time set to Noon!");
+					Notification.PostTicker("Time set to Noon!", false);
 					break;
 				case 2: // Set time of day: Night
 					World.CurrentTimeOfDay = new TimeSpan(20, 0, 0); // 8 PM
-					Notification.Show("Time set to Night!");
+					Notification.PostTicker("Time set to Night!", false);
 					break;
 				case 3: // Remove vehicles
 					foreach (Vehicle vehicle in World.GetAllVehicles())
 					{
 						vehicle.Delete();
 					}
-					Notification.Show("All vehicles removed!");
+					Notification.PostTicker("All vehicles removed!", false);
 					break;
 				case 4: // Low gravity mode
 					Function.Call(Hash.SET_GRAVITY_LEVEL, 1); // Set low gravity level
-					Notification.Show("Low gravity mode activated!");
+					Notification.PostTicker("Low gravity mode activated!", false);
 					break;
 				case 5: // Remove pedestrians
 					foreach (Ped ped in World.GetAllPeds())
 					{
 						ped.Delete();
 					}
-					Notification.Show("All pedestrians removed!");
+					Notification.PostTicker("All pedestrians removed!", false);
 					break;
 			}
 		}
@@ -76,11 +76,11 @@ namespace MenuActions
 			if (car != null)
 			{
 				car.PlaceOnGround();
-				Notification.Show($"{car.DisplayName} spawned!");
+				Notification.PostTicker($"{car.DisplayName} spawned!", false);
 			}
 			else
 			{
-				Notification.Show("Vehicle creation failed!");
+				Notification.PostTicker("Vehicle creation failed!", false);
 			}
 		}
 
@@ -90,7 +90,7 @@ namespace MenuActions
 			{
 				case 0: // God Mode
 					Game.Player.Character.IsInvincible = true;
-					Notification.Show("God Mode Activated!");
+					Notification.PostTicker("God Mode Activated!", false);
 					break;
 				case 1: // Give Weapons
 					Game.Player.Character.Weapons.Give(WeaponHash.AssaultRifle, 200, true, true);
@@ -99,28 +99,29 @@ namespace MenuActions
 					Game.Player.Character.Weapons.Give(WeaponHash.VintagePistol, 200, false, true);
 					Game.Player.Character.Weapons.Give(WeaponHash.Minigun, 200, false, true);
 					Game.Player.Character.Weapons.Give(WeaponHash.APPistol, 200, false, true);
-					Notification.Show("Weapons Given!");
+					Notification.PostTicker("Weapons Given!", false);
 					break;
 				case 2: // Wanted Level Off
-					Game.Player.WantedLevel = 0;
-					Notification.Show("Wanted Level Off!");
+					Game.Player.Wanted.SetWantedLevel(0, false);
+					Game.Player.Wanted.ApplyWantedLevelChangeNow(false);
+                    Notification.PostTicker("Wanted Level Off!", false);
 					break;
 				case 3: // Super Speed
 					superSpeed = !superSpeed;
 					if (superSpeed)
 					{
 						Game.Player.Character.Speed = 10f; // Set speed to a high value
-						Notification.Show("Super Speed Activated!");
+						Notification.PostTicker("Super Speed Activated!", false);
 					}
 					else
 					{
 						Game.Player.Character.Speed = 1f; // Reset speed to normal
-						Notification.Show("Super Speed Deactivated!");
+						Notification.PostTicker("Super Speed Deactivated!", false);
 					}
 					break;
 				case 4: // Infinite Ammo
 					Game.Player.Character.Weapons.Current.InfiniteAmmo = true;
-					Notification.Show("Ammo set to infinite!");
+					Notification.PostTicker("Ammo set to infinite!", false);
 					break;
 			}
 		}
@@ -131,19 +132,19 @@ namespace MenuActions
 			{
 				case 0:
 					World.Weather = Weather.Clouds;
-					Notification.Show("Weather set to Cloudy!");
+					Notification.PostTicker("Weather set to Cloudy!", false);
 					break;
 				case 1:
 					World.Weather = Weather.Clear;
-					Notification.Show("Weather set to Sunny!");
+					Notification.PostTicker("Weather set to Sunny!", false);
 					break;
 				case 2:
 					World.Weather = Weather.Raining;
-					Notification.Show("Weather set to Rainy!");
+					Notification.PostTicker("Weather set to Rainy!", false);
 					break;
 				case 3:
 					World.Weather = Weather.Snowing;
-					Notification.Show("Weather set to Snowy!");
+					Notification.PostTicker("Weather set to Snowy!", false);
 					break;
 			}
 		}

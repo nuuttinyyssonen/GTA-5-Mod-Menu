@@ -18,12 +18,12 @@ namespace Key
                 Main.menuOpen = !Main.menuOpen;
                 if (Main.menuOpen)
                 {
-                    Notification.Show("Mod menu opened!");
+                    Notification.PostTicker("Mod menu opened!", false);
                 }
                 else
                 {
                     Main.currentSubMenu = Main.SubMenu.None; // Reset sub-menu when closing the menu
-                    Notification.Show("Mod Menu Closed!");
+                    Notification.PostTicker("Mod Menu Closed!", false);
                 }
             }
 
